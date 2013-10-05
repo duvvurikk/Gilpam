@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gilpam</string>
+    <string name="action_settings">Settings</string>
+    <string name="welcome">Welcome to Gilpam</string>
+    <string name="login">Please login to continue..</string>
+    <string name="or">or</string>
+    <string name="loginnew">Please enter email id to sign up.</string>
+    <string name="loginsuccess">Login successful.</string>
+    <string name="signupsuccess">Thanks for signing up with Gilpam.</string>
+
+</resources>
