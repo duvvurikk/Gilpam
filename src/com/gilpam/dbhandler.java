@@ -3,6 +3,7 @@ package com.gilpam;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -59,10 +60,17 @@ public class dbhandler extends SQLiteOpenHelper {
 //		values.put("id",newuser.getid());
 		values.put("email",newuser.getemail());
 		values.put("password", newuser.getpassword());
-		
-		db.insert(tablename, null, values);
-		db.close();
-		
+		try {
+//			db.insert(tablename, null, values);
+			db.insertOrThrow(tablename, null, values);
+		} catch (SQLException e){
+			Log.d("Userlog","newuserquick db inserting error message: " +e.getMessage());
+		}
+		try {
+			db.close();
+		} catch (SQLException e){
+			Log.d("Userlog","newuserquick db close error: " +e.toString());
+		}
 	}
 	
 	 void newuserdetail(user newuser){
@@ -75,9 +83,9 @@ public class dbhandler extends SQLiteOpenHelper {
 		values.put("mobilenumber",newuser.getmobilenumber());
 		values.put("password", newuser.getpassword());
 		values.put("usertype", newuser.getusertype());
-		
 		db.insert(tablename, null, values);
 		db.close();
+		
 	}
 	
 	public int getusercount(){
