@@ -8,6 +8,6 @@
     <string name="or">or</string>
     <string name="loginnew">Please enter email id to sign up.</string>
     <string name="loginsuccess">Login successful.</string>
-    <string name="signupsuccess">Thanks for signing up with Gilpam.</string>
+    <string name="signupsuccess">Thanks for signing up, you may continue to shop or complete profile creation</string>
 
 </resources>

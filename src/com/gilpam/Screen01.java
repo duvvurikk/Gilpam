@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -18,6 +19,8 @@ public class Screen01 extends Activity implements OnClickListener{
 	Button signin, signup;
 	dbhandler db = new dbhandler(this);
 	String emailidtxt;
+	Intent intent;
+	public final static String EXTRA_MESSAGE = "com.gilpam.MESSAGE";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +44,10 @@ public class Screen01 extends Activity implements OnClickListener{
 		db.newuserquick(new user(emailidtxt,"password"));
 		Log.d("Userlog:", "Inserting new user email id as part of quick sign up process with default password");
 		Toast.makeText(this, "Signup success with email: " + emailidtxt, Toast.LENGTH_LONG).show();
-/*		int numberofusers = db.getusercount();
-		Toast.makeText(this, "total user count is "+numberofusers, Toast.LENGTH_LONG).show();*/
+		intent = new Intent (this,Screen03.class);
+		intent.putExtra(EXTRA_MESSAGE, emailidtxt);
+		startActivity(intent);
+
 	}
 	
 	private void verifySignin(){
@@ -55,6 +60,9 @@ public class Screen01 extends Activity implements OnClickListener{
 			((EditText)findViewById(R.id.login_password)).setText("");
 		} else {
 			Toast.makeText(this, "Login is a success ", Toast.LENGTH_LONG).show();
+			intent = new Intent (this,Screen02.class);
+			intent.putExtra(EXTRA_MESSAGE, email);
+			startActivity(intent);
 		}
 	}
 	
