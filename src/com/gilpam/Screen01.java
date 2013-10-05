@@ -37,10 +37,26 @@ public class Screen01 extends Activity implements OnClickListener{
 		signup.setOnClickListener(this);
 		
 	}
+	@Override
+	protected void onStart(){
+		super.onStart();
+		Toast.makeText(this, " Activity start", Toast.LENGTH_SHORT).show();
+	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		Toast.makeText(this, " Activity resume", Toast.LENGTH_SHORT).show();
+	}
+	@Override
+	protected void onRestart(){
+		super.onRestart();
+		Toast.makeText(this, " Activity restart", Toast.LENGTH_SHORT).show();
+	}
 	
 	private void newUserSignup(){
 //		db.newuserdetail(new user(1,"kiran","duvvuri","kiran@duvvuri.com","consumer","1234567890","12345"));
 		emailidtxt = emailid.getText().toString();
+		emailidtxt = emailidtxt.toUpperCase();
 		db.newuserquick(new user(emailidtxt,"password"));
 		Log.d("Userlog:", "Inserting new user email id as part of quick sign up process with default password");
 		Toast.makeText(this, "Signup success with email: " + emailidtxt, Toast.LENGTH_LONG).show();
@@ -54,6 +70,8 @@ public class Screen01 extends Activity implements OnClickListener{
 		Log.d("Userlog:","Reading the inserted data...");
 		String email = username.getText().toString();
 		String pass = password.getText().toString();
+		email = email.toUpperCase();
+		((EditText)findViewById(R.id.login_username)).setText(email);
 		boolean signinflag = db.getuserinfo(email,pass);
 		if (signinflag == false){
 			Toast.makeText(this, "Username or Password is incorrect, please try again. ", Toast.LENGTH_LONG).show();

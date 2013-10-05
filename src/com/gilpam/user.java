@@ -14,13 +14,13 @@ public class user {
 	}
 	
 	public user(String email, String password){
-		this.id=id;
+//		this.id=id;
 		this.email=email;
 		this.password=password;
 	}
 	
-	public user(int id, String firstname, String lastname, String email, String usertype, String mobilenumber, String password){
-		this.id=id;
+	public user(String firstname, String lastname, String email, String usertype, String mobilenumber, String password){
+//		this.id=id;
 		this.firstname=firstname;
 		this.lastname=lastname;
 		this.mobilenumber=mobilenumber;

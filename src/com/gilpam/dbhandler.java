@@ -26,7 +26,7 @@ public class dbhandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		
 		String SQLCreateUserTable = "CREATE TABLE " + tablename +" ( id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT, lastname TEXT, email TEXT UNIQUE, usertype TEXT, mobilenumber TEXT, password TEXT)";
-		Log.d("Userlog: ",SQLCreateUserTable + "executing creation of table");
+		Log.d("Userlog: ",SQLCreateUserTable + " executing creation of table");
 		db.execSQL(SQLCreateUserTable);
 		String fn = "firstname";
 		String ln = "lastname";
@@ -35,9 +35,8 @@ public class dbhandler extends SQLiteOpenHelper {
 		String mn = "1234567890";
 		String pw = "password";
 		String SQLInsertFirstRecord = "INSERT INTO " + tablename + "(firstname, lastname, email, usertype, mobilenumber, password) VALUES ('" + fn +"','"+ln+"','"+em+"','"+ut+"','"+mn+"','"+pw+ "')";
-		Log.d("Userlog: ",SQLInsertFirstRecord + "executing insertion of table");
+		Log.d("Userlog: ",SQLInsertFirstRecord + " executing insertion of table");
 		db.execSQL(SQLInsertFirstRecord);
-//		newuserdetail(new user(1,"firstname","lastname","tempemail.com","consumer","1234567890","password"));
 	}
 
 	@Override
@@ -51,17 +50,14 @@ public class dbhandler extends SQLiteOpenHelper {
 		else {
 			Log.d("onUpgrade","You are downgrading the version of the app, not possible");
 		}
-		
 	}
 	
 	 void newuserquick(user newuser){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-//		values.put("id",newuser.getid());
 		values.put("email",newuser.getemail());
 		values.put("password", newuser.getpassword());
 		try {
-//			db.insert(tablename, null, values);
 			db.insertOrThrow(tablename, null, values);
 		} catch (SQLException e){
 			Log.d("Userlog","newuserquick db inserting error message: " +e.getMessage());
@@ -76,22 +72,30 @@ public class dbhandler extends SQLiteOpenHelper {
 	 void newuserdetail(user newuser){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-//		values.put("id", newuser.getid());
 		values.put("firstname", newuser.getfirstname());
 		values.put("lastname", newuser.getlastname());
-		values.put("email", newuser.getemail());
 		values.put("mobilenumber",newuser.getmobilenumber());
 		values.put("password", newuser.getpassword());
 		values.put("usertype", newuser.getusertype());
-		db.insert(tablename, null, values);
-		db.close();
+		String whereclause = "email='"+newuser.getemail()+"'";
+		try {
+			db.update(tablename, values, whereclause, null);
+		} catch (SQLException e){
+			Log.d("Userlog","new user detail db inserting error message: " + e.getMessage());
+			getuserinfo(newuser.getemail());
+		}
+		try {
+			db.close();
+		} catch (SQLException e){
+			Log.d("Userlog","new user detail db close error message: " + e.getMessage());
+		}
 		
 	}
 	
 	public int getusercount(){
 		int count = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
-		String SQL = "SELECT * FROM " + tablename;
+		String SQL = "SELECT * FROM " + tablename + " WHERE email = 'KIRAN'";
 		Log.d("Userlog","sequel is " + SQL);
 		Cursor cursor = db.rawQuery(SQL, null);
 		if(cursor != null && !cursor.isClosed()){
@@ -102,36 +106,23 @@ public class dbhandler extends SQLiteOpenHelper {
 		else {
 			Log.d("Userlog" , "cursor is either null or is closed");
 		}
-
-		return count;
-		
+		return count;	
 	}
 	
-	public int updateuser(user USER){
-		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put("id", USER.getid());
-		values.put("firstname", USER.getfirstname());
-		values.put("lastname", USER.getlastname());
-		values.put("email", USER.getemail());
-		values.put("mobilenumber",USER.getmobilenumber());
-		values.put("password", USER.getpassword());
-		
-		return db.update(tablename, values, "id = ?", new String[] {String.valueOf(USER.getid())});
-	}
-	
-/*	user getuserinfo(int id){
+	public void getuserinfo(String email){
 		user USER = null;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Log.d("Userlog: ", "opened the database in readonly mode");
 //		Cursor cursor = db.query(tablename, new String[] {"id","firstname","lastname","email","usertype","mobilenumber","password"},"id = ? ", new String[] {String.valueOf(id)},null,null,null,null );
-		Cursor cursor = db.query(tablename, new String[] {"id","firstname","lastname","email","usertype","mobilenumber","password"},"id = " + id,null,null,null,null );
+		Cursor cursor = db.query(tablename, new String[] {"id","firstname","lastname","email","usertype","mobilenumber","password"},"email = '" + email + "'",null,null,null,null );
 		if (cursor != null) {
 			cursor.moveToFirst();
-			 USER = new user (Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+			String pass = cursor.getString(6);
+			Log.d("Userlog","query resulted in password: "+ pass + " end of line");
+//			 USER = new user (Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 		}
-		return USER;
-	} */
+//		return USER;
+	} 
 	
 	boolean getuserinfo(String emailid, String password){
 		user USER = null;
