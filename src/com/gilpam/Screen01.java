@@ -25,7 +25,7 @@ public class Screen01 extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_screen01);
+		setContentView(R.layout.activity_screen012);
 		
 		username = (EditText)findViewById(R.id.login_username);
 		password = (EditText)findViewById(R.id.login_password);
@@ -50,6 +50,9 @@ public class Screen01 extends Activity implements OnClickListener{
 	@Override
 	protected void onRestart(){
 		super.onRestart();
+		((EditText)findViewById(R.id.login_username)).setText("");
+		((EditText)findViewById(R.id.login_password)).setText("");
+		((EditText)findViewById(R.id.signup_emailid)).setText("");
 		Toast.makeText(this, " Activity restart", Toast.LENGTH_SHORT).show();
 	}
 	
@@ -78,7 +81,8 @@ public class Screen01 extends Activity implements OnClickListener{
 			((EditText)findViewById(R.id.login_password)).setText("");
 		} else {
 			Toast.makeText(this, "Login is a success ", Toast.LENGTH_LONG).show();
-			intent = new Intent (this,Screen02.class);
+//			intent = new Intent (this,Screen02.class);
+			intent = new Intent(this,ProductCatalog.class);
 			intent.putExtra(EXTRA_MESSAGE, email);
 			startActivity(intent);
 		}

@@ -30,6 +30,14 @@
             android:name="com.gilpam.Screen03"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.gilpam.Home"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="com.gilpam.ProductCatalog"
+            android:label="@string/title_activity_product_catalog" >
+        </activity>
     </application>
 
 </manifest>

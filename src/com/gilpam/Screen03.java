@@ -1,3 +1,8 @@
+/*
+ * This screen is to update the profile of the user *
+ */
+
+
 package com.gilpam;
 
 import android.app.Activity;
